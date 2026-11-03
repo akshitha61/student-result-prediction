@@ -1,0 +1,41 @@
+
+name: Student Result Prediction CI-CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Train ML Model
+        run: python train_model.py
+
+      - name: Check Model Quality
+        run: python quality_gate.py
+
+      - name: Run Unit Tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Build Docker Image
+        run: docker build -t student-result-prediction:latest .
+
+      - name: CI Pipeline Completed
+        run: echo "Student Result Prediction CI Pipeline Successful"
