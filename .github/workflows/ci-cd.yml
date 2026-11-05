@@ -58,4 +58,12 @@ jobs:
           tags: ghcr.io/akshitha61/student-result-prediction:latest
 
       - name: CI/CD Completed
+            - name: Upload ML Model and Metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: student-result-model-and-metrics
+          path: |
+            student_result_model.pkl
+            metrics.json
+          retention-days: 30
         run: echo "Student Result Prediction CI/CD Successful"
