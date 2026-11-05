@@ -18,4 +18,4 @@ if accuracy >= required_accuracy:
 else:
     print("QUALITY GATE FAILED")
     print("Model accuracy is below the required threshold.")
-    raise SystemExit(1)
+    sys.exit(1)
